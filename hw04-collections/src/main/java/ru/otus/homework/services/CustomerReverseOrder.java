@@ -2,15 +2,22 @@ package ru.otus.homework.services;
 
 import ru.otus.homework.models.Customer;
 
-@SuppressWarnings({"java:S1186", "java:S1135", "java:S1172"}) // при выполнении ДЗ эту аннотацию надо удалить
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class CustomerReverseOrder {
 
-    // todo: 2. надо реализовать методы этого класса
-    // надо подобрать подходящую структуру данных, тогда решение будет в "две строчки"
+    Deque<Customer> customers = new LinkedList<>();
 
-    public void add(Customer customer) {}
+    public void add(Customer customer) {
+        customers.add(customer);
+    }
 
     public Customer take() {
-        return null; // это "заглушка, чтобы скомилировать"
+        return customers.pollLast();
     }
 }
