@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class CustomerReverseOrder {
 
-    Deque<Customer> customers = new LinkedList<>();
+    private Deque<Customer> customers = new LinkedList<>();
 
     public void add(Customer customer) {
         customers.add(customer);
