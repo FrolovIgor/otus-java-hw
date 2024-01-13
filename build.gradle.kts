@@ -53,6 +53,7 @@ allprojects {
             force("org.sonarsource.sslr:sslr-core:1.24.0.633")
             force("org.eclipse.platform:org.eclipse.osgi:3.18.400")
             force("org.eclipse.platform:org.eclipse.equinox.common:3.18.0")
+            force("net.bytebuddy:byte-buddy:1.14.4")
         }
     }
 }
