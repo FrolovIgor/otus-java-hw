@@ -21,11 +21,12 @@ public class TestRunner {
         log = Logger.getLogger(TestRunner.class.getName());
     }
 
-    public void run(String className) {
+    public void runTestsByClassName(String className) {
         mediumSplitter();
         log.info("Run tests in " + className);
-        Object object = getObjectByClassName(className);
-        Method[] declaredMethods = object.getClass().getDeclaredMethods();
+        Class<?> clazz = getClassByName(className);
+        Constructor<?> constructor = getConstructor(clazz);
+        Method[] declaredMethods = clazz.getDeclaredMethods();
         var beforeMethods = getBeforeMethods(declaredMethods);
         var afterMethods = getAfterMethods(declaredMethods);
         var testMethods = getTestMethods(declaredMethods);
@@ -35,36 +36,42 @@ public class TestRunner {
 
         for (Method method : testMethods) {
             try {
-                invokeMethods(beforeMethods, object);
-                invokeMethod(method, object);
-                invokeMethods(afterMethods, object);
+                runTest(constructor,method,beforeMethods,afterMethods);
                 successTestsCount++;
                 log.info("test %s succeeded!".formatted(method.getName()));
             } catch (Exception e) {
                 failureTestsCount++;
                 log.warning("test %s failed!".formatted(method.getName()));
             }
-
         }
 
         smallSplitter();
         printStatistics(className, successTestsCount, failureTestsCount, allTestsCount);
     }
 
-    private Object getObjectByClassName(String className) {
-        Class<?> clazz = null;
+    private void runTest(Constructor<?> constructor, Method testMethod, List<Method> beforeMethods, List<Method> afterMethods) {
+        var object = getNewInstance(constructor);
+        invokeMethods(beforeMethods, object);
+        invokeMethod(testMethod, object);
+        invokeMethods(afterMethods, object);
+    }
+
+    private Class<?> getClassByName(String className) {
         try {
-            clazz = Class.forName(className);
+            return Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        Constructor<?> constructor = null;
+    }
+    private Constructor<?> getConstructor(Class<?> clazz) {
         try {
-            constructor = clazz.getConstructor();
+            return clazz.getConstructor();
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Object getNewInstance(Constructor<?> constructor) {
         try {
             return constructor.newInstance();
         } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
