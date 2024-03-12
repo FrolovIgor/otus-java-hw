@@ -16,3 +16,4 @@ pluginManagement {
     }
 }
 include("hw04-collections")
+include("hw08-gc-heap")
