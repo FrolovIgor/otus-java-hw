@@ -36,7 +36,7 @@ public class TestRunner {
 
         for (Method method : testMethods) {
             try {
-                runTest(constructor,method,beforeMethods,afterMethods);
+                runTest(constructor, method, beforeMethods, afterMethods);
                 successTestsCount++;
                 log.info("test %s succeeded!".formatted(method.getName()));
             } catch (Exception e) {
@@ -63,6 +63,7 @@ public class TestRunner {
             throw new RuntimeException(e);
         }
     }
+
     private Constructor<?> getConstructor(Class<?> clazz) {
         try {
             return clazz.getConstructor();
