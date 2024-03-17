@@ -28,11 +28,15 @@ allprojects {
     }
 
     val guava: String by project
+    val logback: String by project
+    val slf4j: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
             dependency("com.google.guava:guava:$guava")
+            dependency("ch.qos.logback:logback-classic:$logback")
+            dependency("org.slf4j:slf4j-api:$slf4j")
         }
     }
 

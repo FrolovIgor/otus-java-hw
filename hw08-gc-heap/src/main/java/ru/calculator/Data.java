@@ -1,7 +1,7 @@
 package ru.calculator;
 
 public class Data {
-    private final Integer value;
+    private Integer value;
 
     public Data(Integer value) {
         this.value = value;
@@ -9,5 +9,9 @@ public class Data {
 
     public Integer getValue() {
         return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
     }
 }
