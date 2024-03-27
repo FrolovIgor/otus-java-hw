@@ -16,3 +16,6 @@ pluginManagement {
     }
 }
 include("hw06-annotations")
+include("hw04-collections")
+include("hw08-gc-heap")
+include("hw16-json-processor")
