@@ -17,3 +17,4 @@ pluginManagement {
 }
 include("hw04-collections")
 include("hw08-gc-heap")
+include("hw10-aop-logging")
