@@ -1,6 +1,4 @@
 rootProject.name = "otus-java-hw"
-include("hw01-gradle")
-include("hw04-collections")
 
 pluginManagement {
     val dependencyManagement: String by settings
@@ -15,5 +13,8 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("hw01-gradle")
 include("hw04-collections")
+include("hw06-annotations")
 include("hw08-gc-heap")
+include("hw16-json-processor")
