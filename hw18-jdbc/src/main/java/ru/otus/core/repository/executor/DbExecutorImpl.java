@@ -31,6 +31,7 @@ public class DbExecutorImpl implements DbExecutor {
     @Override
     public <T> Optional<T> executeSelect(
             Connection connection, String sql, List<Object> params, Function<ResultSet, T> rsHandler) {
+        System.out.println("ExecuteSql: %s".formatted(sql));
         try (var pst = connection.prepareStatement(sql)) {
             for (var idx = 0; idx < params.size(); idx++) {
                 pst.setObject(idx + 1, params.get(idx));

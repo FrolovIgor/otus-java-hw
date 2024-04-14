@@ -53,6 +53,7 @@ allprojects {
             dependency("com.fasterxml.jackson.core:jackson-core:$jackson")
             dependency("com.fasterxml.jackson.core:jackson-databind:$jackson")
             dependency("org.flywaydb:flyway-core:$flyway")
+            dependency("org.flywaydb:flyway-database-postgresql:$flyway")
             dependency("org.postgresql:postgresql:$postgresql")
             dependency("com.zaxxer:HikariCP:$hikari")
 
