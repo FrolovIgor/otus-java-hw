@@ -32,7 +32,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     }
 
     @Override
-    public Optional<T> findById(Connection connection, long id) {
+    public Optional<T> findById(Connection connection, Object id) {
         return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectByIdSql(), List.of(id), rs -> {
             try {
                 if (rs.next()) {
