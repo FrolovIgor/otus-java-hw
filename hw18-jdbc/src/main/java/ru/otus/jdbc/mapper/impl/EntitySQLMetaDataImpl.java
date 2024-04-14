@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
+    private final EntityClassMetaData<T> classMetaData;
     private final String idFieldName;
     private final List<String> fieldsNames;
     private final String selectAllSql;
@@ -18,6 +19,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     private final String PREPARED_STATEMENT_FIELD_STUB = "?";
 
     public EntitySQLMetaDataImpl(EntityClassMetaData<T> classMetaData) {
+        this.classMetaData = classMetaData;
         this.idFieldName = classMetaData.getIdField().getName();
         var notIdFields = classMetaData.getFieldsWithoutId();
         int notIdFieldsAmount = notIdFields.size();

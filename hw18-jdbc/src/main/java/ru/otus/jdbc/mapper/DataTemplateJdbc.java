@@ -14,6 +14,7 @@ import ru.otus.core.repository.DataTemplate;
 import ru.otus.core.repository.DataTemplateException;
 import ru.otus.core.repository.executor.DbExecutor;
 import ru.otus.crm.model.Client;
+import ru.otus.jdbc.mapper.impl.EntitySQLMetaDataImpl;
 
 /**
  * Сохратяет объект в базу, читает объект из базы
@@ -25,10 +26,19 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     private final EntitySQLMetaData entitySQLMetaData;
     private final EntityClassMetaData<T> entityClassMetaData;
 
-    public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData, EntityClassMetaData<T> entityClassMetaData) {
+    public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData) {
         this.dbExecutor = dbExecutor;
         this.entitySQLMetaData = entitySQLMetaData;
-        this.entityClassMetaData = entityClassMetaData;
+        this.entityClassMetaData = getEntityClassMetaData(this.entitySQLMetaData);
+    }
+
+    private EntityClassMetaData<T> getEntityClassMetaData(EntitySQLMetaData sqlMetaData) {
+        try {
+            var classMetaDataField = entitySQLMetaData.getClass().getDeclaredField("classMetaData");
+            return (EntityClassMetaData<T>) getFieldValue(sqlMetaData, classMetaDataField);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
