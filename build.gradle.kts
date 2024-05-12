@@ -34,6 +34,9 @@ allprojects {
     val assertjCore: String by project
     val mockito: String by project
     val jackson: String by project
+    val postgresql: String by project
+    val flyway: String by project
+    val hikari: String by project
     val lombok: String by project
 
     apply(plugin = "io.spring.dependency-management")
@@ -49,8 +52,11 @@ allprojects {
             dependency("org.slf4j:slf4j-api:$slf4j")
             dependency("com.fasterxml.jackson.core:jackson-core:$jackson")
             dependency("com.fasterxml.jackson.core:jackson-databind:$jackson")
+            dependency("org.flywaydb:flyway-core:$flyway")
+            dependency("org.flywaydb:flyway-database-postgresql:$flyway")
+            dependency("org.postgresql:postgresql:$postgresql")
+            dependency("com.zaxxer:HikariCP:$hikari")
             dependency("org.projectlombok:lombok:$lombok")
-
         }
     }
 
@@ -77,6 +83,7 @@ allprojects {
             force("com.fasterxml.jackson.datatype:jackson-datatype-guava:$jackson")
             force("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jackson")
             force("com.fasterxml.jackson.module:jackson-module-parameter-names:$jackson")
+            force("com.fasterxml.jackson.dataformat:jackson-dataformat-toml:$jackson")
         }
     }
 }
