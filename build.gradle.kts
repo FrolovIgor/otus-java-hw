@@ -30,24 +30,24 @@ allprojects {
     val guava: String by project
     val logback: String by project
     val slf4j: String by project
-    val junitApi: String by project
-    val junitEngine: String by project
+    val junit: String by project
     val assertjCore: String by project
-    val mockitoCore: String by project
-    val mockitoJupiter: String by project
+    val mockito: String by project
     val jackson: String by project
     val postgresql: String by project
     val flyway: String by project
     val hikari: String by project
+    val lombok: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
             dependency("com.google.guava:guava:$guava")
-            dependency("org.junit.jupiter:junit-jupiter-api:$junitApi")
-            dependency("org.junit.jupiter:junit-jupiter-engine:$junitEngine")
+            dependency("org.junit.jupiter:junit-jupiter-api:$junit")
+            dependency("org.junit.jupiter:junit-jupiter-engine:$junit")
+            dependency("org.junit.jupiter:junit-jupiter-params:$junit")
             dependency("org.assertj:assertj-core:$assertjCore")
-            dependency("org.mockito:mockito-junit-jupiter:$mockitoJupiter")
+            dependency("org.mockito:mockito-junit-jupiter:$mockito")
             dependency("ch.qos.logback:logback-classic:$logback")
             dependency("org.slf4j:slf4j-api:$slf4j")
             dependency("com.fasterxml.jackson.core:jackson-core:$jackson")
@@ -56,8 +56,7 @@ allprojects {
             dependency("org.flywaydb:flyway-database-postgresql:$flyway")
             dependency("org.postgresql:postgresql:$postgresql")
             dependency("com.zaxxer:HikariCP:$hikari")
-
-
+            dependency("org.projectlombok:lombok:$lombok")
         }
     }
 
