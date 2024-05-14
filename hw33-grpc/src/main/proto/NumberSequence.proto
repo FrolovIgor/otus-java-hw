@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package ru.otus.grpc;
+
+option java_multiple_files = true;
+
+message SequenceRequest {
+    int64 firstValue = 1;
+    int64 lastValue = 2;
+}
+
+message SequenceValue {
+    int64 sequenceValue = 1;
+}
+
+service SequenceGeneratorService {
+    rpc generateSequence(SequenceRequest) returns (stream SequenceValue);
+}
