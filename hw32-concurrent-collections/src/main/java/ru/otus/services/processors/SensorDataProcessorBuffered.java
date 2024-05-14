@@ -34,22 +34,17 @@ public class SensorDataProcessorBuffered implements SensorDataProcessor {
 
     public void flush() {
         try {
-            if (readForFlash()) writer.writeBufferedData(bufferedData);
+            if (readForFlush())
+                writer.writeBufferedData(bufferedData);
         } catch (Exception e) {
             log.error("Ошибка в процессе записи буфера", e);
         }
     }
 
-    private synchronized boolean readForFlash() {
+    private synchronized boolean readForFlush() {
         bufferedData.clear();
         if (!dataBuffer.isEmpty()) {
-            while (!dataBuffer.isEmpty()) {
-                try {
-                    bufferedData.add(dataBuffer.take());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            dataBuffer.drainTo(bufferedData);
             return true;
         } else return false;
     }
