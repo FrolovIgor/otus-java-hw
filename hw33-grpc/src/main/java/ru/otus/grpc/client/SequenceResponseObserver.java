@@ -1,31 +1,32 @@
 package ru.otus.grpc.client;
 
 import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otus.grpc.SequenceValue;
 
-import java.util.logging.Logger;
 
 public class SequenceResponseObserver implements StreamObserver<SequenceValue> {
 
-    private static final Logger LOGGER = Logger.getGlobal();
+    private static final Logger LOG = LoggerFactory.getLogger(SequenceResponseObserver.class);
 
-    private long lastValue=0;
+    private long lastValue = 0;
 
     @Override
     public void onNext(SequenceValue value) {
-        LOGGER.info("Get new value: " + value);
+        LOG.info("Number from server: {}", value);
         setLastValue(value.getSequenceValue());
     }
 
     @Override
     public void onError(Throwable e) {
-        LOGGER.warning("Error: " + e);
+        LOG.error("Got error: ", e);
 
     }
 
     @Override
     public void onCompleted() {
-        LOGGER.info("Processing completed");
+        LOG.info("Processing completed");
     }
 
     public long getLastValueAndReset() {

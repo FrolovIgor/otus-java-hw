@@ -1,43 +1,43 @@
 package ru.otus.grpc.client;
 
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.ServerBuilder;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otus.grpc.SequenceGeneratorServiceGrpc;
 import ru.otus.grpc.SequenceRequest;
-import ru.otus.grpc.server.service.SequenceGeneratorService;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class NumberSequenceClient {
     public static final int SERVER_PORT = 8190;
     private static final String SERVER_HOST = "localhost";
-    private static final Integer LOOP_LIMIT = 5;
+    private static final int LOOP_LIMIT = 50;
+    private static final long FIRST_VALUE = 0;
+    private static final long LAST_VALUE = 30;
 
-    private static final Logger LOGGER = Logger.getGlobal();
+    private static final Logger LOG = LoggerFactory.getLogger(NumberSequenceClient.class);
     private static long value = 0;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        LOGGER.info("Client starting, wait information ...");
+        LOG.info("Client starting, wait information ...");
 
         var channel = ManagedChannelBuilder.forAddress(SERVER_HOST, SERVER_PORT)
                 .usePlaintext()
                 .build();
-
         var stub = SequenceGeneratorServiceGrpc.newStub(channel);
+        var responseObserver = new SequenceResponseObserver();
 
         var request = SequenceRequest.newBuilder()
-                .setFirstValue(0L)
-                .setLastValue(30L)
+                .setFirstValue(FIRST_VALUE)
+                .setLastValue(LAST_VALUE)
                 .build();
 
-        var responseObserver = new SequenceResponseObserver();
+
 
         stub.generateSequence(request, responseObserver);
 
         for (var i = 0; i < LOOP_LIMIT; i++) {
-            LOGGER.info("currentValue: "+getNextValue(responseObserver));
+            LOG.info("currentValue: {}", getNextValue(responseObserver));
             sleep();
         }
 
