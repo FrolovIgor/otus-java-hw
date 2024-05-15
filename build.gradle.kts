@@ -65,7 +65,7 @@ allprojects {
             dependency("io.grpc:grpc-netty-shaded:$grpc")
             dependency("io.grpc:grpc-protobuf:$grpc")
             dependency("io.grpc:grpc-stub:$grpc")
-            dependency("org.slf4j:slf4j-api:2.0.13")
+            dependency("org.slf4j:slf4j-api:$slf4j")
 
         }
     }
