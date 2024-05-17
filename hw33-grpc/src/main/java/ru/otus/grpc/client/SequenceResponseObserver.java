@@ -29,13 +29,13 @@ public class SequenceResponseObserver implements StreamObserver<SequenceValue> {
         LOG.info("Processing completed");
     }
 
-    public long getLastValueAndReset() {
+    public synchronized long getLastValueAndReset() {
         var lastValuePrev = this.lastValue;
         this.lastValue = 0;
         return lastValuePrev;
     }
 
-    public void setLastValue(long lastValue) {
+    private synchronized void setLastValue(long lastValue) {
         this.lastValue = lastValue;
     }
 }
