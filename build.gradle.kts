@@ -38,10 +38,15 @@ allprojects {
     val flyway: String by project
     val hikari: String by project
     val lombok: String by project
+    val grpc: String by project
+    val protobufBom: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
+            imports {
+                mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
+            }
             dependency("com.google.guava:guava:$guava")
             dependency("org.junit.jupiter:junit-jupiter-api:$junit")
             dependency("org.junit.jupiter:junit-jupiter-engine:$junit")
@@ -57,6 +62,11 @@ allprojects {
             dependency("org.postgresql:postgresql:$postgresql")
             dependency("com.zaxxer:HikariCP:$hikari")
             dependency("org.projectlombok:lombok:$lombok")
+            dependency("io.grpc:grpc-netty-shaded:$grpc")
+            dependency("io.grpc:grpc-protobuf:$grpc")
+            dependency("io.grpc:grpc-stub:$grpc")
+            dependency("org.slf4j:slf4j-api:$slf4j")
+
         }
     }
 
@@ -123,10 +133,10 @@ tasks {
     val managedVersions by registering {
         doLast {
             project.extensions.getByType<DependencyManagementExtension>()
-                    .managedVersions
-                    .toSortedMap()
-                    .map { "${it.key}:${it.value}" }
-                    .forEach(::println)
+                .managedVersions
+                .toSortedMap()
+                .map { "${it.key}:${it.value}" }
+                .forEach(::println)
         }
     }
 }
