@@ -1,11 +1,13 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
     idea
     id("io.spring.dependency-management")
     id("name.remal.sonarlint") apply false
     id("com.diffplug.spotless") apply false
+    id("org.springframework.boot") apply false
 }
 
 idea {
@@ -41,10 +43,21 @@ allprojects {
     val grpc: String by project
     val protobufBom: String by project
 
+    val sockjs: String by project
+    val stomp: String by project
+    val bootstrap: String by project
+    val springDocOpenapiUi: String by project
+    val jsr305: String by project
+    val r2dbcPostgresql: String by project
+    val wiremock: String by project
+    val nettyEpoll: String by project
+    val reflections: String by project
+
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
         dependencies {
             imports {
+                mavenBom(SpringBootPlugin.BOM_COORDINATES)
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
@@ -53,12 +66,9 @@ allprojects {
             dependency("org.junit.jupiter:junit-jupiter-params:$junit")
             dependency("org.assertj:assertj-core:$assertjCore")
             dependency("org.mockito:mockito-junit-jupiter:$mockito")
-            dependency("ch.qos.logback:logback-classic:$logback")
             dependency("org.slf4j:slf4j-api:$slf4j")
             dependency("com.fasterxml.jackson.core:jackson-core:$jackson")
             dependency("com.fasterxml.jackson.core:jackson-databind:$jackson")
-            dependency("org.flywaydb:flyway-core:$flyway")
-            dependency("org.flywaydb:flyway-database-postgresql:$flyway")
             dependency("org.postgresql:postgresql:$postgresql")
             dependency("com.zaxxer:HikariCP:$hikari")
             dependency("org.projectlombok:lombok:$lombok")
@@ -66,6 +76,20 @@ allprojects {
             dependency("io.grpc:grpc-protobuf:$grpc")
             dependency("io.grpc:grpc-stub:$grpc")
             dependency("org.slf4j:slf4j-api:$slf4j")
+
+            dependency("org.webjars:sockjs-client:$sockjs")
+            dependency("org.webjars:stomp-websocket:$stomp")
+            dependency("org.webjars:bootstrap:$bootstrap")
+            dependency("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenapiUi")
+            dependency("com.google.code.findbugs:jsr305:$jsr305")
+
+            dependency("io.r2dbc:r2dbc-postgresql:$r2dbcPostgresql")
+            dependency("com.github.tomakehurst:wiremock-standalone:$wiremock")
+            dependency("io.netty:netty-transport-native-epoll:$nettyEpoll")
+            dependency("org.reflections:reflections:$reflections")
+
+
+
 
         }
     }
@@ -94,6 +118,8 @@ allprojects {
             force("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jackson")
             force("com.fasterxml.jackson.module:jackson-module-parameter-names:$jackson")
             force("com.fasterxml.jackson.dataformat:jackson-dataformat-toml:$jackson")
+
+            force("org.opentest4j:opentest4j:1.3.0")
         }
     }
 }
@@ -108,6 +134,7 @@ subprojects {
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
         options.compilerArgs.addAll(listOf("-Xlint:all,-serial,-processing"))
+        options.compilerArgs.add("-parameters")
     }
 
     apply<name.remal.gradle_plugins.sonarlint.SonarLintPlugin>()
