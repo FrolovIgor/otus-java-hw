@@ -1,4 +1,6 @@
 package ru.otus.webserver.crm.model;
 
-public record ClientDTO(String name, String address, String phone) {
+import java.util.List;
+
+public record ClientDTO(long id, String name, String address, List<String> phones) {
 }

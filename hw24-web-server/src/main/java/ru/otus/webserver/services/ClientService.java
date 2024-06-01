@@ -6,6 +6,6 @@ import ru.otus.webserver.crm.model.ClientDTO;
 import java.util.List;
 
 public interface ClientService {
-    List<Client> getAllClients();
+    List<ClientDTO> getAllClients();
     Client save(ClientDTO client);
 }

@@ -15,6 +15,7 @@ import ru.otus.webserver.crm.service.DBServiceClient;
 import ru.otus.webserver.crm.service.DbServiceClientImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -41,9 +42,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getAllClients() {
+    public List<ClientDTO> getAllClients() {
         log.info("Get all clients from database");
-        return dbServiceClient.findAll();
+        return dbServiceClient.findAll().stream().map(this::clientToDTO).toList();
     }
 
     @Override
@@ -57,6 +58,14 @@ public class ClientServiceImpl implements ClientService {
         return new Client(
                 clientDTO.name(),
                 new Address(clientDTO.address()),
-                List.of(new Phone(clientDTO.phone())));
+                clientDTO.phones().stream().map(Phone::new).toList());
+    }
+
+    private ClientDTO clientToDTO(Client client) {
+        return new ClientDTO(
+                client.getId(),
+                client.getName(),
+                client.getAddress().getStreet(),
+                client.getPhones().stream().map(Phone::getNumber).collect(Collectors.toList()));
     }
 }
