@@ -6,23 +6,21 @@ import org.eclipse.jetty.ee10.servlet.ServletHolder;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import ru.otus.webserver.dao.AdminDao;
 import ru.otus.webserver.helpers.FileSystemHelper;
 import ru.otus.webserver.services.ClientService;
 import ru.otus.webserver.services.TemplateProcessor;
 import ru.otus.webserver.servlet.ClientsApiServlet;
-import ru.otus.webserver.servlet.UsersServlet;
+import ru.otus.webserver.servlet.ClientsServlet;
 
-public class UsersWebServerSimple implements UsersWebServer {
+public class ClientsWebServerSimple implements ClientsWebServer {
     private static final String START_PAGE_NAME = "index.html";
     private static final String COMMON_RESOURCES_DIR = "static";
-
     private final ClientService clientService;
     private final Gson gson;
     protected final TemplateProcessor templateProcessor;
     private final Server server;
 
-    public UsersWebServerSimple(int port, ClientService clientService, Gson gson, TemplateProcessor templateProcessor) {
+    public ClientsWebServerSimple(int port, ClientService clientService, Gson gson, TemplateProcessor templateProcessor) {
         this.clientService = clientService;
         this.gson = gson;
         this.templateProcessor = templateProcessor;
@@ -59,7 +57,6 @@ public class UsersWebServerSimple implements UsersWebServer {
         server.setHandler(sequence);
     }
 
-    @SuppressWarnings({"squid:S1172"})
     protected Handler applySecurity(ServletContextHandler servletContextHandler, String... paths) {
         return servletContextHandler;
     }
@@ -75,7 +72,7 @@ public class UsersWebServerSimple implements UsersWebServer {
 
     private ServletContextHandler createServletContextHandler() {
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.addServlet(new ServletHolder(new UsersServlet(templateProcessor, clientService)), "/clients");
+        servletContextHandler.addServlet(new ServletHolder(new ClientsServlet(templateProcessor)), "/clients");
         servletContextHandler.addServlet(new ServletHolder(new ClientsApiServlet(clientService, gson)), "/api/clients/*");
         return servletContextHandler;
     }

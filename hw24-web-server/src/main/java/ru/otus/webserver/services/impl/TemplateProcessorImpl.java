@@ -1,8 +1,9 @@
-package ru.otus.webserver.services;
+package ru.otus.webserver.services.impl;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import ru.otus.webserver.services.TemplateProcessor;
 
 import java.io.IOException;
 import java.io.StringWriter;

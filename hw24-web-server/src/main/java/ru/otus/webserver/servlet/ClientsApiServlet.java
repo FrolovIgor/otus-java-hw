@@ -7,14 +7,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.otus.webserver.crm.model.ClientDTO;
-import ru.otus.webserver.dao.AdminDao;
-import ru.otus.webserver.model.Admin;
 import ru.otus.webserver.services.ClientService;
-
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@SuppressWarnings({"squid:S1948"})
 public class ClientsApiServlet extends HttpServlet {
 
     private final ClientService clientService;

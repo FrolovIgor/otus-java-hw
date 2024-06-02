@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ru.otus.webserver.services.TemplateProcessor;
-import ru.otus.webserver.services.AdminAuthService;
+import ru.otus.webserver.services.UserAuthService;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -22,9 +22,9 @@ public class LoginServlet extends HttpServlet {
     private static final String LOGIN_PAGE_TEMPLATE = "login.html";
 
     private final TemplateProcessor templateProcessor;
-    private final AdminAuthService userAuthService;
+    private final UserAuthService userAuthService;
 
-    public LoginServlet(TemplateProcessor templateProcessor, AdminAuthService userAuthService) {
+    public LoginServlet(TemplateProcessor templateProcessor, UserAuthService userAuthService) {
         this.userAuthService = userAuthService;
         this.templateProcessor = templateProcessor;
     }
