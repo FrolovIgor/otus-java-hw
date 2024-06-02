@@ -52,6 +52,7 @@ allprojects {
     val wiremock: String by project
     val nettyEpoll: String by project
     val reflections: String by project
+    val assertj: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -87,6 +88,8 @@ allprojects {
             dependency("com.github.tomakehurst:wiremock-standalone:$wiremock")
             dependency("io.netty:netty-transport-native-epoll:$nettyEpoll")
             dependency("org.reflections:reflections:$reflections")
+            dependency("org.assertj:assertj-core:$assertj")
+
 
 
 
