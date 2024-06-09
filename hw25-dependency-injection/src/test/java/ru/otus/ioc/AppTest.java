@@ -1,6 +1,5 @@
 package ru.otus.ioc;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,18 +25,18 @@ class AppTest {
     @ParameterizedTest(name = "Достаем по: {0}")
     @CsvSource(
             value = {
-                "GameProcessor, ru.otus.services.GameProcessor",
-                "GameProcessorImpl, ru.otus.services.GameProcessor",
-                "gameProcessor, ru.otus.services.GameProcessor",
-                "IOService, ru.otus.services.IOService",
-                "IOServiceStreams, ru.otus.services.IOService",
-                "ioService, ru.otus.services.IOService",
-                "PlayerService, ru.otus.services.PlayerService",
-                "PlayerServiceImpl, ru.otus.services.PlayerService",
-                "playerService, ru.otus.services.PlayerService",
-                "EquationPreparer, ru.otus.services.EquationPreparer",
-                "EquationPreparerImpl, ru.otus.services.EquationPreparer",
-                "equationPreparer, ru.otus.services.EquationPreparer"
+                "GameProcessor, ru.otus.ioc.services.GameProcessor",
+                "GameProcessorImpl, ru.otus.ioc.services.GameProcessor",
+                "gameProcessor, ru.otus.ioc.services.GameProcessor",
+                "IOService, ru.otus.ioc.services.IOService",
+                "IOServiceStreams, ru.otus.ioc.services.IOService",
+                "ioService, ru.otus.ioc.services.IOService",
+                "PlayerService, ru.otus.ioc.services.PlayerService",
+                "PlayerServiceImpl, ru.otus.ioc.services.PlayerService",
+                "playerService, ru.otus.ioc.services.PlayerService",
+                "EquationPreparer, ru.otus.ioc.services.EquationPreparer",
+                "EquationPreparerImpl, ru.otus.ioc.services.EquationPreparer",
+                "equationPreparer, ru.otus.ioc.services.EquationPreparer"
             })
     void shouldExtractFromContextCorrectComponentWithNotNullFields(String classNameOrBeanId, Class<?> rootClass)
             throws Exception {
@@ -46,7 +45,7 @@ class AppTest {
         assertThat(classNameOrBeanId).isNotEmpty();
         Object component;
         if (classNameOrBeanId.charAt(0) == classNameOrBeanId.toUpperCase().charAt(0)) {
-            Class<?> gameProcessorClass = Class.forName("ru.otus.services." + classNameOrBeanId);
+            Class<?> gameProcessorClass = Class.forName("ru.otus.ioc.services." + classNameOrBeanId);
             assertThat(rootClass).isAssignableFrom(gameProcessorClass);
 
             component = ctx.getAppComponent(gameProcessorClass);

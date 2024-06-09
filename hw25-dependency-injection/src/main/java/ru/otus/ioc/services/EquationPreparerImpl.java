@@ -1,8 +1,8 @@
 package ru.otus.ioc.services;
 
-import ru.otus.ioc.model.DivisionEquation;
 import ru.otus.ioc.model.Equation;
 import ru.otus.ioc.model.MultiplicationEquation;
+import ru.otus.ioc.model.DivisionEquation;
 
 import java.util.ArrayList;
 import java.util.Collections;
